@@ -6,7 +6,7 @@
 
 namespace inspirenmy\config\core;
 
-use demmonico\models\ActiveRecord;
+use inspirenmy\models\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 

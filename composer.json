@@ -12,7 +12,7 @@
         "php": ">5.5.0",
         "yiisoft/yii2": "~2.0.0",
 
-        "demmonico/yii2-models": "*",
+        "inspirenmy/yii2-models": "*",
         "demmonico/yii2-helpers": "*",
         "inspirenmy/yii2-traits": "*"
     },
