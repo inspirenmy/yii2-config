@@ -3,7 +3,7 @@
  * Date: 05.09.16
  */
 
-namespace demmonico\config\admin\actions;
+namespace inspirenmy\config\admin\actions;
 
 use yii\helpers\Html;
 
@@ -11,7 +11,7 @@ use yii\helpers\Html;
 /**
  * Class ImportDefaultAction import default values of params
  * @author: dep
- * @package demmonico\config\admin\actions
+ * @package inspirenmy\config\admin\actions
  */
 class ImportDefaultAction extends ImportBaseAction
 {

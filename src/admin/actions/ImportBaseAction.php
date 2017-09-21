@@ -3,9 +3,9 @@
  * Date: 05.09.16
  */
 
-namespace demmonico\config\admin\actions;
+namespace inspirenmy\config\admin\actions;
 
-use demmonico\config\core\Configurator;
+use inspirenmy\config\core\Configurator;
 use yii\base\Action;
 use yii\web\ServerErrorHttpException;
 

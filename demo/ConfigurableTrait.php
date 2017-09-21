@@ -9,7 +9,7 @@
 
 /**
  * Trait ConfigurableTrait implements Yii2 Configurable interface and
- * automatic loading config params from Yii2 config component ( @see https://github.com/demmonico/yii2-config )
+ * automatic loading config params from Yii2 config component ( @see https://github.com/inspirenmy/yii2-config )
  * @author: dep
  *
  * @use

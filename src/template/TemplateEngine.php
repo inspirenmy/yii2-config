@@ -4,10 +4,10 @@
  * Date: 08.09.16
  */
 
-namespace demmonico\template;
+namespace inspirenmy\template;
 
 use demmonico\helpers\FileHelper;
-use demmonico\config\core\Configurator as BaseConfigurator;
+use inspirenmy\config\core\Configurator as BaseConfigurator;
 
 
 /**
@@ -27,7 +27,7 @@ use demmonico\config\core\Configurator as BaseConfigurator;
  * At config file can set:
  * [
  *      'template' => [
- *          'class' => 'demmonico\template\TemplateEngine',
+ *          'class' => 'inspirenmy\template\TemplateEngine',
  *          'tableName' => 'tbl_template',
  *          'handler' => [
  *              'class' => 'testHandler',
@@ -134,7 +134,7 @@ class TemplateEngine extends BaseConfigurator
 
 
 
-use demmonico\config\core\MissingEvent;
+use inspirenmy\config\core\MissingEvent;
 
 class MissingTemplateEvent extends MissingEvent
 {

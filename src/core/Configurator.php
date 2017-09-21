@@ -4,7 +4,7 @@
  * Date: 09.02.16
  */
 
-namespace demmonico\config\core;
+namespace inspirenmy\config\core;
 
 use demmonico\models\ActiveRecord;
 use yii\helpers\ArrayHelper;

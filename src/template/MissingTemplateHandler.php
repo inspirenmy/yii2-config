@@ -4,10 +4,10 @@
  * Date: 09.02.16
  */
 
-namespace demmonico\template;
+namespace inspirenmy\template;
 
-use demmonico\config\core\MissingEvent;
-use demmonico\config\core\MissingHandler;
+use inspirenmy\config\core\MissingEvent;
+use inspirenmy\config\core\MissingHandler;
 
 
 class MissingTemplateHandler extends MissingHandler

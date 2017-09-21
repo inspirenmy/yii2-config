@@ -39,11 +39,11 @@ This extension contains following components:
 
 1) Get from composer
 ```php
-composer require demmonico/yii2-config
+composer require inspirenmy/yii2-config
 ```
 or add dependency at composer.json in "require" section
 ```php
-"demmonico/yii2-config": "*"
+"inspirenmy/yii2-config": "*"
 ```
 
 2) Create DB tables for config storage and templates storage manually 
@@ -73,7 +73,7 @@ return [
     //...
     'components' => [
         //...
-        'config' => 'demmonico\config\Configurator',
+        'config' => 'inspirenmy\config\Configurator',
     ],
 ];
 ```
@@ -91,7 +91,7 @@ return [
     'components' => [
         //...
         'config' => [
-            'class' => 'demmonico\config\Configurator',
+            'class' => 'inspirenmy\config\Configurator',
             'tableName' => 'tbl_config',
             'defaultConfigFile' => '@common/data/default.php',
         ],
@@ -222,7 +222,7 @@ For example configuring sms component with `sms.senderNumber` param:
 ```php
 // ...
 'sms' => [
-    'class' => 'demmonico\sms\Sender',
+    'class' => 'inspirenmy\sms\Sender',
     'senderNumber' => [
         'component' => 'config',
         'sms.senderNumber' => 'AppName',
@@ -288,7 +288,7 @@ Administrator of the web application can:
 Allows to get template from database table or if it doesn't exists then from template source file. 
 Before return it replaces all matches of template variables.
 
-Configuring process is very similar with Config component except name of class - use `demmonico\template\TemplateEngine`.
+Configuring process is very similar with Config component except name of class - use `inspirenmy\template\TemplateEngine`.
 
 Usage process is very similar to [get param of config application](#get-param-of-config-application).
 Getter sequentially passes following steps. If it finds out value the pass breaks. 
@@ -317,7 +317,7 @@ Other processes are similar to Config component's processes.
 Allows to get email params like subject, template's name from DB and then use template from prepared the file store 
 (where it can be modified from backend by admin) or if it doesn't exists then from mail template source file. 
 
-Configuring process is very similar with Config component except name of class - use `demmonico\template\Mailer`.
+Configuring process is very similar with Config component except name of class - use `inspirenmy\template\Mailer`.
 
 Usage process is very similar to [get param of config application](#get-param-of-config-application).
 Getter sequentially passes following steps. If it finds out value the pass breaks. 
@@ -334,7 +334,7 @@ or more detail
 ```php
 \Yii::$app->email
     ->setTemplate('test-html.php')
-    ->setTo('demmonico@gmail.com')
+    ->setTo('inspirenmy@gmail.com')
     ->setFrom('admin@localhost')
     ->setSubject('Your account on ' . $appName)
     ->setParams(['user' => $this, 'appName' => $appName])

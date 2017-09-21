@@ -4,10 +4,10 @@
  * Date: 09.02.16
  */
 
-namespace demmonico\email;
+namespace inspirenmy\email;
 
-use demmonico\config\core\MissingEvent;
-use demmonico\config\core\MissingHandler;
+use inspirenmy\config\core\MissingEvent;
+use inspirenmy\config\core\MissingHandler;
 
 
 class MissingEmailHandler extends MissingHandler

@@ -3,9 +3,9 @@
  * Date: 12.02.16
  */
 
-namespace demmonico\config;
+namespace inspirenmy\config;
 
-use demmonico\config\admin\ConfiguratorAdminTrait;
+use inspirenmy\config\admin\ConfiguratorAdminTrait;
 use demmonico\helpers\ReflectionHelper;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;

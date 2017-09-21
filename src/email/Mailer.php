@@ -4,7 +4,7 @@
  * Date: 18.02.16
  */
 
-namespace demmonico\email;
+namespace inspirenmy\email;
 
 use yii\base\Configurable;
 use yii\helpers\StringHelper;
@@ -21,7 +21,7 @@ use yii\helpers\StringHelper;
  * or
  * \Yii::$app->email
  *      ->setTemplate('test-html.php')
- *      ->setTo('demmonico@gmail.com')
+ *      ->setTo('inspirenmy@gmail.com')
  *      ->setFrom('admin@localhost')
  *      ->setSubject('Your account on ' . $appName)
  *      ->setParams(['user' => $this, 'appName' => $appName])
@@ -63,8 +63,8 @@ class Mailer implements Configurable
      * 'components' => [
      *      // ...
      *      'email' => [
-     *          'class' => 'demmonico\email\Mailer',
-     *          'redirectEmail' => 'demmonico@gmail.com',
+     *          'class' => 'inspirenmy\email\Mailer',
+     *          'redirectEmail' => 'inspirenmy@gmail.com',
      *      ],
      * ],
      *
@@ -72,10 +72,10 @@ class Mailer implements Configurable
      * 'components' => [
      *      // ...
      *      'email' => [
-     *          'class' => 'demmonico\email\Mailer',
+     *          'class' => 'inspirenmy\email\Mailer',
      *          'redirectEmail' => [
      *              'component' => 'config',
-     *              'email.debug.redirectEmail' => 'demmonico@gmail.com',
+     *              'email.debug.redirectEmail' => 'inspirenmy@gmail.com',
      *          ]
      *      ],
      * ],
@@ -88,7 +88,7 @@ class Mailer implements Configurable
      * 'components' => [
      *      // ...
      *      'email' => [
-     *          'class' => 'demmonico\email\Mailer',
+     *          'class' => 'inspirenmy\email\Mailer',
      *          'isTransferEnabled' => false,
      *      ],
      * ],
@@ -97,7 +97,7 @@ class Mailer implements Configurable
      * 'components' => [
      *      // ...
      *      'email' => [
-     *          'class' => 'demmonico\email\Mailer',
+     *          'class' => 'inspirenmy\email\Mailer',
      *          'isTransferEnabled' => [
      *              'component' => 'config',
      *              'email.debug.isTransferEnabled' => false,

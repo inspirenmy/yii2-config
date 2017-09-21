@@ -4,10 +4,10 @@
  * Date: 09.02.16
  */
 
-namespace demmonico\email;
+namespace inspirenmy\email;
 
 use demmonico\helpers\FileHelper;
-use demmonico\config\core\Configurator as BaseConfigurator;
+use inspirenmy\config\core\Configurator as BaseConfigurator;
 use yii\helpers\Html;
 
 
@@ -135,7 +135,7 @@ class Configurator extends BaseConfigurator
 
 
 
-use demmonico\config\core\MissingEvent;
+use inspirenmy\config\core\MissingEvent;
 
 class MissingEmailEvent extends MissingEvent
 {

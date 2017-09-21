@@ -4,13 +4,13 @@
  * Date: 09.02.16
  */
 
-namespace demmonico\config;
+namespace inspirenmy\config;
 
-use demmonico\traits\ConstantTrait;
+use inspirenmy\traits\ConstantTrait;
 use yii\base\Application;
 use yii\base\BootstrapInterface;
 use yii\helpers\ArrayHelper;
-use demmonico\config\core\Configurator as BaseConfigurator;
+use inspirenmy\config\core\Configurator as BaseConfigurator;
 
 /**
  * Component Configurator works with app configs
@@ -28,7 +28,7 @@ use demmonico\config\core\Configurator as BaseConfigurator;
  * @use At config file can pre-configuring other components:
  * [
  *      'sms' => [
- *          'class' => 'demmonico\sms\Sender',
+ *          'class' => 'inspirenmy\sms\Sender',
  *          'senderNumber' => [
  *              'component' => 'config',
  *              'sms.senderNumber' => 'AppName',
@@ -39,7 +39,7 @@ use demmonico\config\core\Configurator as BaseConfigurator;
  * @use At config file can set:
  * [
  *      'config' => [
- *          'class' => 'demmonico\config\Configurator',
+ *          'class' => 'inspirenmy\config\Configurator',
  *          'tableName' => 'tbl_config',
  *          'defaultConfigFile' => '@common/data/default.php',
  *          'handler' => [
@@ -290,7 +290,7 @@ class Configurator extends BaseConfigurator implements BootstrapInterface
 
 
 
-use demmonico\config\core\MissingEvent;
+use inspirenmy\config\core\MissingEvent;
 use demmonico\helpers\ReflectionHelper;
 
 class MissingConfigEvent extends MissingEvent

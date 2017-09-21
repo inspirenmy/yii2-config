@@ -3,7 +3,7 @@
  * Date: 27.01.16
  */
 
-namespace demmonico\config\admin;
+namespace inspirenmy\config\admin;
 
 use yii\bootstrap\Html;
 use yii\helpers\ArrayHelper;

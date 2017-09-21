@@ -1,12 +1,12 @@
 {
-    "name": "demmonico/yii2-config",
+    "name": "inspirenmy/yii2-config",
     "type": "yii2-extension",
     "description": "Yii2 extension which allows to get application parameters, text or email templates from database tables or from default config, to import and to manage them from admin panel dynamically.",
     "keywords": ["yii", "yii2", "config", "template", "template engine", "email", "mailer", "extension", "component"],
-    "homepage": "https://github.com/demmonico/yii2-config",
+    "homepage": "https://github.com/inspirenmy/yii2-config",
     "license": "MIT",
     "authors": [
-        {"name": "demmonico", "email": "demmonico@gmail.com"}
+        {"name": "inspirenmy", "email": "inspirenmy@gmail.com"}
     ],
     "require": {
         "php": ">5.5.0",
@@ -14,13 +14,13 @@
 
         "demmonico/yii2-models": "*",
         "demmonico/yii2-helpers": "*",
-        "demmonico/yii2-traits": "*"
+        "inspirenmy/yii2-traits": "*"
     },
     "autoload": {
         "psr-4": {
-            "demmonico\\config\\": "src",
-            "demmonico\\template\\": "src/template",
-            "demmonico\\email\\": "src/email"
+            "inspirenmy\\config\\": "src",
+            "inspirenmy\\template\\": "src/template",
+            "inspirenmy\\email\\": "src/email"
         }
     }
 }
