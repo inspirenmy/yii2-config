@@ -11,6 +11,8 @@ use yii\base\Application;
 use yii\base\BootstrapInterface;
 use yii\helpers\ArrayHelper;
 use inspirenmy\config\core\Configurator as BaseConfigurator;
+use yii\helpers\VarDumper;
+use demmonico\helpers\FileHelper;
 
 /**
  * Component Configurator works with app configs
@@ -121,6 +123,9 @@ class Configurator extends BaseConfigurator implements BootstrapInterface
      */
     private $_defaults;
 
+    public $runtimeConfigFolder = '@app/config';
+
+    public $runtimeConfigFile = 'runtime.php';
 
 
     /**
@@ -244,6 +249,18 @@ class Configurator extends BaseConfigurator implements BootstrapInterface
         return $r;
     }
 
+    public function getStartWith($keyCondition)
+    {
+        $r = [];
+        $configs = $this->loadConfig();
+        if (!empty($configs)) foreach($configs as $k=>$v){
+            if (false !== preg_match('/^' . $keyCondition . '/i', $k)){
+                $r[$k] = $v;
+            }
+        }
+        return $r;
+    }
+
     /**
      * Get Yii::$app config key
      * Order source: object variable, cache, DB, Yii::$app->$key
@@ -254,6 +271,7 @@ class Configurator extends BaseConfigurator implements BootstrapInterface
     public function app($key)
     {
         $configs = $this->loadConfig();
+
         $namespacedKey = 'appconfig.'.$key;
         if(!isset($configs[$namespacedKey])){
             if (isset(\Yii::$app->$key)){
@@ -284,6 +302,81 @@ class Configurator extends BaseConfigurator implements BootstrapInterface
         return $this->_configs;
     }
 
+    public function build()
+    {
+        $params = $this->getRuntimeConfigArray();
+        $file = $this->getRuntimeConfigPath();
+
+        if($params){
+            $isNew = !is_file($file);
+            if ($isNew){
+                $dir = dirname($file);
+                if (!is_dir($dir))
+                    FileHelper::mkdir($dir);
+            }
+            file_put_contents($file, "<?php\nreturn " . VarDumper::export($params) . ";\n", LOCK_EX);
+            if ($isNew)
+                FileHelper::chmod($file);
+        } else {
+            FileHelper::unlink($file);
+        }
+    }
+
+    public function getRuntimeConfigArray()
+    {
+        $appconfig = [];
+
+        $c = [];
+
+        $rawArr = ArrayHelper::merge(
+            $this->getStartWith('appconfig'),
+            $this->getStartWith(\Yii::$app->id . '.appconfig')
+        );
+
+        foreach ($rawArr as $key => $value) 
+        {
+            $key = preg_replace('/^' . \Yii::$app->id . '.appconfig.' . '/', '', $key);
+
+            $key = preg_replace('/^' . 'appconfig.' . '/', '', $key);
+
+            $c[$key] = $value;
+        }
+
+        foreach ($c as $config => $value) 
+        {
+            $parts = explode('.', $config);
+
+            $r = [];
+
+            $last = true;
+
+            foreach ($parts as $part) 
+            {
+                $arr = [];
+
+                while ($bottom = array_pop($parts)) 
+                {
+                    $arr = [$bottom => ($last ? $value : $arr)];
+                    $last = false;
+                }
+
+                $r = \yii\helpers\ArrayHelper::merge($r, $arr);
+            
+            }
+
+            $appconfig = \yii\helpers\ArrayHelper::merge($appconfig, $r);
+        }
+
+        return $appconfig;
+    }
+
+    public function getRuntimeConfigPath()
+    {
+        $folder = trim($this->runtimeConfigFolder, '/');
+        $file = $this->runtimeConfigFile;
+
+        return \Yii::getAlias($folder . '/' . $file . ('' === pathinfo($file, PATHINFO_EXTENSION) ? '.php' : ''));
+    }
 }
 
 
