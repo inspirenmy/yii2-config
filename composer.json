@@ -13,7 +13,7 @@
         "yiisoft/yii2": "~2.0.0",
 
         "inspirenmy/yii2-models": "*",
-        "demmonico/yii2-helpers": "*",
+        "inspirenmy/yii2-helpers": "*",
         "inspirenmy/yii2-traits": "*"
     },
     "autoload": {

@@ -12,7 +12,7 @@ use yii\base\BootstrapInterface;
 use yii\helpers\ArrayHelper;
 use inspirenmy\config\core\Configurator as BaseConfigurator;
 use yii\helpers\VarDumper;
-use demmonico\helpers\FileHelper;
+use inspirenmy\helpers\FileHelper;
 
 /**
  * Component Configurator works with app configs
@@ -384,7 +384,7 @@ class Configurator extends BaseConfigurator implements BootstrapInterface
 
 
 use inspirenmy\config\core\MissingEvent;
-use demmonico\helpers\ReflectionHelper;
+use inspirenmy\helpers\ReflectionHelper;
 
 class MissingConfigEvent extends MissingEvent
 {

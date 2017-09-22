@@ -6,7 +6,7 @@
 
 namespace inspirenmy\email;
 
-use demmonico\helpers\FileHelper;
+use inspirenmy\helpers\FileHelper;
 use inspirenmy\config\core\Configurator as BaseConfigurator;
 use yii\helpers\Html;
 

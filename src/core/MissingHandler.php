@@ -6,7 +6,7 @@
 
 namespace inspirenmy\config\core;
 
-use demmonico\helpers\FileHelper;
+use inspirenmy\helpers\FileHelper;
 use yii\helpers\ArrayHelper;
 use yii\helpers\VarDumper;
 

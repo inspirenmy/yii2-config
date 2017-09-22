@@ -6,7 +6,7 @@
 namespace inspirenmy\config;
 
 use inspirenmy\config\admin\ConfiguratorAdminTrait;
-use demmonico\helpers\ReflectionHelper;
+use inspirenmy\helpers\ReflectionHelper;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\validators\Validator;
