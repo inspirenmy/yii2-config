@@ -30,7 +30,7 @@ class ConfiguratorAdmin extends Configurator
     {
         return array_merge(parent::rules(), [
 //            [['key','value'], 'trim'],
-            [['key', 'type', 'value'], 'required', 'on' => self::SCENARIO_DEFAULT],
+            [['key', 'type', /*'value'*/], 'required', 'on' => self::SCENARIO_DEFAULT],
 
             ['key', 'unique', 'targetAttribute' => ['key'], 'on' => self::SCENARIO_DEFAULT, 'message'=> '{attribute} "{value}" already exists.'],
             ['key', 'string', 'max' => 32, 'on' => self::SCENARIO_DEFAULT],
@@ -46,7 +46,7 @@ class ConfiguratorAdmin extends Configurator
     public function scenarios()
     {
         return ArrayHelper::merge(parent::scenarios(), [
-            self::SCENARIO_SEARCH => ['key', 'value', 'type', 'created', 'updated']
+            self::SCENARIO_SEARCH => ['key', 'value', 'type', 'created_at', 'updated_at']
         ]);
     }
 
@@ -57,6 +57,8 @@ class ConfiguratorAdmin extends Configurator
     {
         $query = static::find();
         $dataProvider = new ActiveDataProvider(['query' => $query]);
+
+        
         $this->load($params);
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -66,8 +68,8 @@ class ConfiguratorAdmin extends Configurator
         $query->andFilterWhere(['type'=> $this->type]);
         $query->andFilterWhere(['like', 'key', $this->key])
             ->andFilterWhere(['like', 'value', $this->value])
-            ->andFilterWhere(['like', 'created', $this->created])
-            ->andFilterWhere(['like', 'updated', $this->updated]);
+            ->andFilterWhere(['like', 'created_at', $this->created_at])
+            ->andFilterWhere(['like', 'updated_at', $this->updated_at]);
         return $dataProvider;
     }
 
@@ -77,8 +79,9 @@ class ConfiguratorAdmin extends Configurator
     public function afterSave( $insert, $changedAttributes )
     {
         parent::afterSave( $insert, $changedAttributes );
-        \Yii::$app->{$this->backendCacheComponent}->delete(self::CACHE_NAME);
-        \Yii::$app->{$this->frontendCacheComponent}->delete(self::CACHE_NAME);
+
+        if (isset(\Yii::$app->{$this->backendCacheComponent})) \Yii::$app->{$this->backendCacheComponent}->delete(self::CACHE_NAME);
+        if (isset(\Yii::$app->{$this->frontendCacheComponent})) \Yii::$app->{$this->frontendCacheComponent}->delete(self::CACHE_NAME);
     }
 
     /**
@@ -87,8 +90,9 @@ class ConfiguratorAdmin extends Configurator
     public function afterDelete()
     {
         parent::afterDelete();
-        \Yii::$app->{$this->backendCacheComponent}->delete(self::CACHE_NAME);
-        \Yii::$app->{$this->frontendCacheComponent}->delete(self::CACHE_NAME);
+        
+        if (isset(\Yii::$app->{$this->backendCacheComponent})) \Yii::$app->{$this->backendCacheComponent}->delete(self::CACHE_NAME);
+        if (isset(\Yii::$app->{$this->frontendCacheComponent})) \Yii::$app->{$this->frontendCacheComponent}->delete(self::CACHE_NAME);
     }
 
 

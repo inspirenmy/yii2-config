@@ -125,7 +125,7 @@ class Configurator extends BaseConfigurator implements BootstrapInterface
 
     public $runtimeConfigFolder = '@app/config';
 
-    public $runtimeConfigFile = 'runtime.php';
+    public $runtimeConfigFileName = 'runtime.php';
 
 
     /**
@@ -253,9 +253,14 @@ class Configurator extends BaseConfigurator implements BootstrapInterface
     {
         $r = [];
         $configs = $this->loadConfig();
-        if (!empty($configs)) foreach($configs as $k=>$v){
-            if (false !== preg_match('/^' . $keyCondition . '/i', $k)){
-                $r[$k] = $v;
+        if (!empty($configs)) 
+        {
+            foreach($configs as $k => $v)
+            {
+                if (preg_match('/^' . $keyCondition . '/i', $k))
+                {
+                    $r[$k] = $v;
+                }
             }
         }
         return $r;
@@ -302,10 +307,21 @@ class Configurator extends BaseConfigurator implements BootstrapInterface
         return $this->_configs;
     }
 
-    public function build()
+    public function flushCache()
     {
-        $params = $this->getRuntimeConfigArray();
-        $file = $this->getRuntimeConfigPath();
+        \Yii::$app->cache->delete(self::CACHE_NAME);
+    }
+
+    public function build($appId = null, $folder = null, $fileName = null)
+    {
+        $this->flushCache();
+
+        $appId      = ($appId       === null)  ? \Yii::$app->id                : $appId;
+        $folder     = ($folder      === null)  ? $this->runtimeConfigFolder    : $folder;
+        $fileName   = ($fileName    === null)  ? $this->runtimeConfigFileName  : $fileName;
+
+        $params = $this->getRuntimeConfigArray($appId);
+        $file = $this->getRuntimeConfigPath($folder, $fileName);
 
         if($params){
             $isNew = !is_file($file);
@@ -322,7 +338,7 @@ class Configurator extends BaseConfigurator implements BootstrapInterface
         }
     }
 
-    public function getRuntimeConfigArray()
+    public function getRuntimeConfigArray($appId = null)
     {
         $appconfig = [];
 
@@ -330,12 +346,12 @@ class Configurator extends BaseConfigurator implements BootstrapInterface
 
         $rawArr = ArrayHelper::merge(
             $this->getStartWith('appconfig'),
-            $this->getStartWith(\Yii::$app->id . '.appconfig')
+            $this->getStartWith($appId . '.appconfig')
         );
 
         foreach ($rawArr as $key => $value) 
         {
-            $key = preg_replace('/^' . \Yii::$app->id . '.appconfig.' . '/', '', $key);
+            $key = preg_replace('/^' . $appId . '.appconfig.' . '/', '', $key);
 
             $key = preg_replace('/^' . 'appconfig.' . '/', '', $key);
 
@@ -370,12 +386,9 @@ class Configurator extends BaseConfigurator implements BootstrapInterface
         return $appconfig;
     }
 
-    public function getRuntimeConfigPath()
+    public function getRuntimeConfigPath($folder, $fileName)
     {
-        $folder = trim($this->runtimeConfigFolder, '/');
-        $file = $this->runtimeConfigFile;
-
-        return \Yii::getAlias($folder . '/' . $file . ('' === pathinfo($file, PATHINFO_EXTENSION) ? '.php' : ''));
+        return \Yii::getAlias($folder . '/' . $fileName . ('' === pathinfo($fileName, PATHINFO_EXTENSION) ? '.php' : ''));
     }
 }
 
