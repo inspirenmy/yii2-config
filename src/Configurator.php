@@ -118,7 +118,6 @@ class Configurator extends BaseConfigurator implements BootstrapInterface
      * @var array
      */
     private $_configs;
-
     /**
      * @var array
      */
@@ -127,6 +126,7 @@ class Configurator extends BaseConfigurator implements BootstrapInterface
     public $runtimeConfigFolder = '@app/config';
 
     public $runtimeConfigFileName = 'runtime.php';
+
 
     /**
      * Load default configs array from file
@@ -249,20 +249,18 @@ class Configurator extends BaseConfigurator implements BootstrapInterface
         return $r;
     }
 
-    public function getApplicationKey ($keyCondition, $appId)
+    public function getStartWith($keyCondition, $appId)
     {
         $r = [];
-        $configs = $this->loadConfig($appId);
+        $configs = $this->loadConfig();
 
-        if (!empty($configs)) 
-        {   foreach ($configs as $config ) {
-            
-                foreach ($config as $k => $v) 
+        if (!empty($configs) && isset($configs[$appId])) 
+        {   
+            foreach($configs[$appId] as $k => $v)
+            {
+                if (preg_match('/^' . $keyCondition . '/i', $k))
                 {
-                    if (preg_match('/^' . $keyCondition . '/i', $k))
-                    { 
-                        $r[$k] = $v;
-                    }
+                    $r[$k] = $v;
                 }
             }
         }
@@ -298,29 +296,15 @@ class Configurator extends BaseConfigurator implements BootstrapInterface
      * Returns configs array
      * @return array|mixed
      */
-    protected function loadConfig($appId = null)
+    protected function loadConfig()
     {
-        // if (is_null($this->_configs))
-        // {
+        if (is_null($this->_configs)){
             $this->_configs = \Yii::$app->cache->get(self::CACHE_NAME);
-
-            if (false === $this->_configs)
-            {
-                $configQuery = static::find()->select(['key', 'value', 'application' ])->andWhere(['application' => $appId]);
-
-                if ($appId != null)
-                {
-                    $configQuery->andWhere(['application' => $appId]);
-                }
-
-                $this->_configs = ArrayHelper::map( 
-                    $configQuery->all(), 
-                    'key', 'value' , 'application'
-                );
-
+            if (false === $this->_configs){
+                $this->_configs = ArrayHelper::map( static::find()->select(['key', 'value' , 'application'])->all(), 'key', 'value' ,'application' );
                 \Yii::$app->cache->set(self::CACHE_NAME, $this->_configs, 10000);
             }
-        //}
+        }
         return $this->_configs;
     }
 
@@ -338,7 +322,6 @@ class Configurator extends BaseConfigurator implements BootstrapInterface
         $fileName   = ($fileName    === null)  ? $this->runtimeConfigFileName  : $fileName;
 
         $params = $this->getRuntimeConfigArray($appId);
-
         $file = $this->getRuntimeConfigPath($folder, $fileName);
 
         if($params){
@@ -347,8 +330,8 @@ class Configurator extends BaseConfigurator implements BootstrapInterface
                 $dir = dirname($file);
                 if (!is_dir($dir))
                     FileHelper::mkdir($dir);
-            } 
-            file_put_contents($file, "<?php\nreturn " . VarDumper::export($params) . ";\n", LOCK_EX);                
+            }
+            file_put_contents($file, "<?php\nreturn " . VarDumper::export($params) . ";\n", LOCK_EX);
             if ($isNew)
                 FileHelper::chmod($file);
         } else {
@@ -361,12 +344,18 @@ class Configurator extends BaseConfigurator implements BootstrapInterface
         $appconfig = [];
 
         $c = [];
+        // $rawArr = ArrayHelper::merge(
+        //     $this->getStartWith('appconfig', $appId),
+        //     $this->getStartWith($appId . '.appconfig', $appId)
+        // );
 
-        $rawArr = $this->getApplicationKey('appconfig', $appId);
+        $rawArr = $this->getStartWith('appconfig', $appId);
 
         foreach ($rawArr as $key => $value) 
         {
+            //$key = preg_replace('/^' . $appId . '.appconfig.' . '/', '', $key);
             $key = preg_replace('/^' . 'appconfig.' . '/', '', $key);
+
             $c[$key] = $value;
         }
 
@@ -389,6 +378,7 @@ class Configurator extends BaseConfigurator implements BootstrapInterface
                 }
 
                 $r = \yii\helpers\ArrayHelper::merge($r, $arr);
+            
             }
 
             $appconfig = \yii\helpers\ArrayHelper::merge($appconfig, $r);
@@ -402,6 +392,10 @@ class Configurator extends BaseConfigurator implements BootstrapInterface
         return \Yii::getAlias($folder . '/' . $fileName . ('' === pathinfo($fileName, PATHINFO_EXTENSION) ? '.php' : ''));
     }
 }
+
+
+
+
 
 use inspirenmy\config\core\MissingEvent;
 use inspirenmy\helpers\ReflectionHelper;
